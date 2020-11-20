@@ -76,7 +76,7 @@ while toc - t0 <= mt
         ch_fea = sum(A*ch' <= b)/m;
         % Local search
         if ch_fea == 1
-            ch = kp_child_local_search(ch,n,W,A,b);
+            ch = kp_child_local_search(ch,n,W,A,b,t0,mt);
         end
         % Save child
         S(j,:) = ch;

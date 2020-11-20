@@ -1,4 +1,4 @@
-function x = kp_child_local_search(x,n,W,A,b)
+function x = kp_child_local_search(x,n,W,A,b,t0,mt)
 %KP_CHILD_LOCAL_SEARCH Local search for children individuals
 %
 %   Inputs:
@@ -7,6 +7,8 @@ function x = kp_child_local_search(x,n,W,A,b)
 %   W - Objective coefficients
 %   A - Constraint coefficients
 %   b - Resource capacity
+%   t0 - Initial time
+%   mt - Maximum execution time
 %
 %   Outputs:
 %   x - Mutated solution
