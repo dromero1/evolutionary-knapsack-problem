@@ -63,14 +63,6 @@ for ti = 1:IC
     %% Execution
     if s == 1
         MR = kp_scenario1(ti,n,p,m,W,A,b,mt,dbg);
-    elseif s == 2
-        MR = kp_scenario2(ti,n,p,m,W,A,b,mt,dbg);
-    elseif s == 3
-        MR = kp_scenario3(ti,n,p,m,W,A,b,mt,dbg);
-    elseif s == 4
-        MR = kp_scenario4(ti,n,p,m,W,A,b,mt,dbg);
-    elseif s == 5
-        MR = kp_scenario5(ti,n,p,m,W,A,b,mt,dbg);
     end
     %% Pareto front
     % Mix solutions
