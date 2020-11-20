@@ -26,6 +26,8 @@ t0 = toc;
 % Solutions
 X = false(1,n);
 Z = zeros(1,p+1);
+
+% Number of feasible solutions
 fc = 0;
 
 % Main loop
@@ -47,6 +49,7 @@ while toc - t0 <= mt
                 fea = sum(A*x_star' <= b)/m;
                 % Local search objective values
                 Z(i,:) = [(W*x_star')' fea];
+                % Update feasible count
                 if fea == 1
                     fc = fc + 1;
                 end
