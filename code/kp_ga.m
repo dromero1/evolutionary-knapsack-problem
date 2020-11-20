@@ -1,4 +1,4 @@
-function [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,alpha,J,mt,dbg)
+function [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,alpha,J,mup,mt,dbg)
 %KP_GA Genetic approach to the knapsack problem
 %
 %   Inputs:
@@ -11,6 +11,7 @@ function [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,alpha,J,mt,dbg)
 %   b - Resource capacity
 %   alpha - Best candidate percentage
 %   J - Number of neighborhoods
+%   mup - Mutation probability
 %   mt - Maximum execution time
 %   dbg - Debug mode
 %
@@ -23,19 +24,16 @@ function [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,alpha,J,mt,dbg)
 t0 = toc;
 
 % Population size
-pop_size = 100;
+pop_size = 500;
 
 % Number of children
-num_children = 30;
-
-% Mutation probability
-epsilon = 0.1;
+num_children = 100;
 
 % Bitwise mutation probability
-gamma = 0.5 * epsilon;
+gamma = 0.5 * mup;
 
 % Genetic algorithm's time share
-gats = 0.8;
+gats = 0.9;
 
 % Solutions
 X = false(pop_size,n);
@@ -59,6 +57,7 @@ end
 F = kp_fitness(Z);
 
 % Main loop
+gen = 1;
 while toc - t0 <= gats*mt
     % Genetic operators
     S = false(num_children,n); % Children solutions
@@ -74,7 +73,7 @@ while toc - t0 <= gats*mt
         ch = kp_crossover(p1,p2);
         % Mutation
         r = rand;
-        if r < epsilon
+        if r < mup
             ch = kp_mutation(ch,gamma);
         end
         % Feasibility percentage
@@ -100,6 +99,11 @@ while toc - t0 <= gats*mt
     Ipu = Ipu(1:pop_size);
     X = X(Ipu,:);
     Z = Z(Ipu,:);
+    if dbg == true
+        fprintf('GA Instance %d (Gen. %d, mup. %0.2f, ',ti,gen,mup);
+        fprintf('fitness std. = %0.2f)\n',std(F));
+    end
+    gen = gen + 1;
 end
 
 % Local search

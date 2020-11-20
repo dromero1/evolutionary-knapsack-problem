@@ -64,14 +64,14 @@ alpha_sweep = [0.05 0.15 0.25];
 % end
 
 %% GA method
-for alpha = alpha_sweep
+for mup = [0.10 0.25 0.40]
     % Get solutions
     tic
-    [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,alpha,J,mt,dbg);
+    [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,0.25,J,mup,mt,dbg);
     time = toc;
     % Save results
     mr.mid = mid;
-    mr.mtd = sprintf('G-GA-%0.2f',alpha);
+    mr.mtd = sprintf('G-GA-%0.2f',mup);
     mr.X = X;
     mr.Z = Z;
     mr.t = time;
