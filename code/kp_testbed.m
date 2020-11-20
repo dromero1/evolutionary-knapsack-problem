@@ -42,7 +42,7 @@ rI2 = zeros(IC,1);
 rDU = zeros(IC,1);
 
 %% Main loop
-for ti = 5:IC
+for ti = 1:IC
     %% Extraction
     % Raw problem
     P_raw = readmatrix(input_file,'Sheet',['I',num2str(ti)],'NumHeaderLines',0);
