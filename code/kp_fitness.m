@@ -40,7 +40,7 @@ while true
     end
     [ND,~] = pareto_dominance(Y);
     F(ND) = dc;
-    Y(ND,:) = -Inf*ones(length(ND),p);
+    Y(ND,:) = (-Inf)*ones(length(ND),p);
     dc = dc + 1;
     rc = rc + length(ND);
 end
