@@ -39,11 +39,15 @@ X = false(pop_size,n);
 Z = zeros(pop_size,p+1);
 fc = 0;
 
+% Number of solutions
+nsol = 0;
+
 % Generate initial population
 for i = 1:pop_size
     [x,fea,~] = kp_grasp_construct_solution(n,m,W,A,b,alpha);
     X(i,:) = x';
     Z(i,:) = [(W*x)' fea];
+    nsol = nsol + 1;
 end
 
 % Initial fitness assignment
@@ -74,6 +78,8 @@ while toc - t0 <= mt
         S(j,:) = ch;
         % Save objetive values
         Zs(j,:) = [(W*ch')' ch_fea];
+        % Update solution count
+        nsol = nsol + 1;
     end
     % Merge solutions
     X = [X; S];
