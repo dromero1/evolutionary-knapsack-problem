@@ -61,7 +61,7 @@ while toc - t0 <= mt
     for j = 1:num_children
         % Check time
         if toc - t0 > mt
-           break;
+            break;
         end
         % Selection
         [x,y] = kp_selection(X,F);
