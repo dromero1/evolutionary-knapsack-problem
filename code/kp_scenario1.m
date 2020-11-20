@@ -27,22 +27,6 @@ mid = 1;
 % Alpha sweep
 alpha_sweep = [0.05 0.15 0.25];
 
-%% Constructive method
-% Get solution
-tic
-[x,fea,~] = kp_grasp_construct_solution(n,m,W,A,b,0.0);
-time = toc;
-% Save results
-mr.mid = mid;
-mr.mtd = sprintf('C');
-mr.X = x';
-mr.Z = [(W*x)' fea];
-mr.t = time;
-mr.nsol = 1;
-MR = [MR; mr];
-% Update method instance id
-mid = mid + 1;
-
 %% GRASP method
 for alpha = alpha_sweep
     % Get solutions
@@ -70,24 +54,6 @@ for alpha = alpha_sweep
     % Save results
     mr.mid = mid;
     mr.mtd = sprintf('G-VND-%0.2f',alpha);
-    mr.X = X;
-    mr.Z = Z;
-    mr.t = time;
-    mr.nsol = nsol;
-    MR = [MR; mr];
-    % Update method instance id
-    mid = mid + 1;
-end
-
-%% MS-ILS GRASP method
-for alpha = alpha_sweep
-    % Get solutions
-    tic
-    [X,Z,nsol] = kp_msils(ti,n,p,m,W,A,b,alpha,J,mt,dbg);
-    time = toc;
-    % Save results
-    mr.mid = mid;
-    mr.mtd = sprintf('MS-ILS-G-%0.2f',alpha);
     mr.X = X;
     mr.Z = Z;
     mr.t = time;
