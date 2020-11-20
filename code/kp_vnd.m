@@ -41,11 +41,11 @@ while sol >= 1 && toc - t0 <= mt
     j = 1;
     while j <= J && toc - t0 <= mt
         if j == 1
-            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_1add(x,n,W,A,R,b,z);
+            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_1add(x,n,W,A,R,b,z,true);
         elseif j == 2
-            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_2flip(x,n,W,A,R,b,z);
+            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_2flip(x,n,W,A,R,b,z,true);
         else
-            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_21flip(x,n,W,A,R,b,z);
+            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_21flip(x,n,W,A,R,b,z,true);
         end
         if found == true
             % Update current solution

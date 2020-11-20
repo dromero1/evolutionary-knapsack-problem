@@ -1,4 +1,4 @@
-function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_21flip(x0,n,W,A,R,b,z)
+function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_21flip(x0,n,W,A,R,b,z,ndf)
 %KP_VND_21FLIP KP Variable neighborhood descent 2-1-flip
 %
 %   Inputs:
@@ -9,6 +9,7 @@ function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_21flip(x0,n,W,A,R,b
 %   R - Current resource consumption
 %   b - Resource capacity
 %   z - Current objective values
+%   ndf - Look for local non-dominated solutions
 %
 %   Outputs:
 %   found - A better solution was found
@@ -67,7 +68,7 @@ for i = 1:n
                                 end
                                 % Determine if the new solution is not
                                 % dominated by the current solution
-                            elseif ~(prod(z>=z_prime) == 1 && sum(z>z_prime) >= 1)
+                            elseif ~(prod(z>=z_prime) == 1 && sum(z>z_prime) >= 1) && ndf == true
                                 % Apply movement
                                 x_nd = x;
                                 x_nd(i) = false;

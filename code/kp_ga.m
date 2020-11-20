@@ -31,6 +31,9 @@ num_children = 30;
 % Mutation probability
 epsilon = 0.1;
 
+% Bitwise mutation probability
+gamma = 0.01;
+
 % Solutions
 X = false(pop_size,n);
 Z = zeros(pop_size,p+1);
@@ -43,15 +46,45 @@ for i = 1:pop_size
     Z(i,:) = [(W*x)' fea];
 end
 
+% Initial fitness assignment
+F = kp_fitness(Z);
+
 % Main loop
 while toc - t0 <= mt
+    % Genetic operators
+    S = false(num_children,n); % Children solutions
+    Zs = zeros(num_children,p+1); % Children objective values
+    for j = 1:num_children
+        % Selection
+        [x,y] = kp_selection(X,F);
+        % Crossover
+        ch = kp_crossover(x,y);
+        % Mutation
+        r = rand;
+        if r < epsilon
+            ch = kp_mutation(ch,gamma);
+        end
+        % Feasibility percentage
+        ch_fea = sum(A*ch' <= b)/m;
+        % Local search
+        if ch_fea == 1
+            ch = kp_child_local_search(ch,n,W,A,b);
+        end
+        % Save child
+        S(j,:) = ch;
+        % Save objetive values
+        Zs(j,:) = [(W*ch')' ch_fea];
+    end
+    % Merge solutions
+    X = [X; S];
+    Z = [Z; Zs];
     % Fitness assignment
     F = kp_fitness(Z);
-    % Genetic operators
-    for j = 1:num_children
-        
-    end
     % Update population
+    [~,Ipu] = sort(F);
+    Ipu = Ipu(1:pop_size);
+    X = X(Ipu,:);
+    Z = Z(Ipu,:);
 end
 
 % Variable neighborhood search

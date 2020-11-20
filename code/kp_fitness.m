@@ -8,10 +8,10 @@ function F = kp_fitness(Z)
 %   F - Fitness assignment
 
 % Dimensions
-[n,p] = size(Z);
+[k,p] = size(Z);
 
 % Fitness
-F = zeros(n,1);
+F = zeros(k,1);
 
 % Solutions to rank
 Y = Z;
@@ -22,16 +22,20 @@ dc = 1;
 % Ranked counter
 rc = 0;
 
+% Unfeasible solutions
+Iuf = find(Y(:,end)~=1);
+Y(Iuf,:) = (-1)*ones(length(Iuf),p);
+
 % First front
 [ND,~] = pareto_dominance(Y);
 F(ND) = dc;
-Y(ND,:) = -Inf*ones(length(ND),p);
+Y(ND,:) = (-Inf)*ones(length(ND),p);
 dc = dc + 1;
 rc = rc + length(ND);
 
 % Following fronts
 while true
-    if rc == n
+    if rc == k
         break;
     end
     [ND,~] = pareto_dominance(Y);
