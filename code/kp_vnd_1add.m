@@ -1,4 +1,4 @@
-function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_1add(x0,n,W,A,R,b,z,ndf)
+function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_1add(x0,n,W,A,R,b,z,ndf,t0,mt)
 %KP_VND_1ADD KP Variable neighborhood descent 1-add
 %
 %   Inputs:
@@ -10,6 +10,8 @@ function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_1add(x0,n,W,A,R,b,z
 %   b - Resource capacity
 %   z - Current objective values
 %   ndf - Look for local non-dominated solutions
+%   t0 - Initial time
+%   mt - Maximum execution time
 %
 %   Outputs:
 %   found - A better solution was found
@@ -75,6 +77,10 @@ for i = 1:n
                 Z_lnd = Z_lnd(ND,:);
             end
         end
+    end
+    % Check time
+    if toc - t0 > mt
+        break;
     end
 end
 

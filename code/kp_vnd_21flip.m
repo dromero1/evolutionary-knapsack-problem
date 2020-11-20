@@ -1,4 +1,4 @@
-function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_21flip(x0,n,W,A,R,b,z,ndf)
+function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_21flip(x0,n,W,A,R,b,z,ndf,t0,mt)
 %KP_VND_21FLIP KP Variable neighborhood descent 2-1-flip
 %
 %   Inputs:
@@ -10,6 +10,8 @@ function [found,x_star,R_delta,z_delta,X_lnd,Z_lnd] = kp_vnd_21flip(x0,n,W,A,R,b
 %   b - Resource capacity
 %   z - Current objective values
 %   ndf - Look for local non-dominated solutions
+%   t0 - Initial time
+%   mt - Maximum execution time
 %
 %   Outputs:
 %   found - A better solution was found
@@ -84,9 +86,21 @@ for i = 1:n
                             end
                         end
                     end
+                    % Check time
+                    if toc - t0 > mt
+                        break;
+                    end
                 end
             end
+            % Check time
+            if toc - t0 > mt
+                break;
+            end
         end
+    end
+    % Check time
+    if toc - t0 > mt
+        break;
     end
 end
 

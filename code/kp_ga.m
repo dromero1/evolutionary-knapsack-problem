@@ -59,6 +59,10 @@ while toc - t0 <= mt
     S = false(num_children,n); % Children solutions
     Zs = zeros(num_children,p+1); % Children objective values
     for j = 1:num_children
+        % Check time
+        if toc - t0 > mt
+           break;
+        end
         % Selection
         [x,y] = kp_selection(X,F);
         % Crossover

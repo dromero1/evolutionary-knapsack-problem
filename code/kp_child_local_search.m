@@ -22,11 +22,11 @@ j = randi(3);
 
 % Neighborhood-based local search
 if j == 1
-    [found,x_star,~,~,~,~] = kp_vnd_1add(x,n,W,A,R,b,z,false);
+    [found,x_star,~,~,~,~] = kp_vnd_1add(x,n,W,A,R,b,z,false,t0,mt);
 elseif j == 2
-    [found,x_star,~,~,~,~] = kp_vnd_2flip(x,n,W,A,R,b,z,false);
+    [found,x_star,~,~,~,~] = kp_vnd_2flip(x,n,W,A,R,b,z,false,t0,mt);
 else
-    [found,x_star,~,~,~,~] = kp_vnd_21flip(x,n,W,A,R,b,z,false);
+    [found,x_star,~,~,~,~] = kp_vnd_21flip(x,n,W,A,R,b,z,false,t0,mt);
 end
 
 if found == true
