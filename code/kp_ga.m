@@ -100,7 +100,7 @@ while toc - t0 <= gats*mt
     X = X(Ipu,:);
     Z = Z(Ipu,:);
     if dbg == true
-        fprintf('GA Instance %d (Gen. %d, mup. %0.2f, ',ti,gen,mup);
+        fprintf('GA Instance %d (gen. = %d, mup. = %0.2f, ',ti,gen,mup);
         fprintf('fitness std. = %0.2f)\n',std(F));
     end
     gen = gen + 1;
