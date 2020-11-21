@@ -1,4 +1,4 @@
-function X = kp_vnd(x0,n,m,W,A,b,J,t0,mt)
+function X = kp_vnd(x0,n,m,W,A,b,J,ndf,t0,mt)
 %KP_VND KP Variable neighborhood descent
 %
 %   Inputs:
@@ -9,6 +9,7 @@ function X = kp_vnd(x0,n,m,W,A,b,J,t0,mt)
 %   A - Constraint coefficients
 %   b - Resource capacity
 %   J - Number of neighborhoods
+%   ndf - Look for local non-dominated solutions
 %   t0 - Initial time
 %   mt - Maximum execution time
 %
@@ -41,11 +42,11 @@ while sol >= 1 && toc - t0 <= mt
     j = 1;
     while j <= J && toc - t0 <= mt
         if j == 1
-            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_1add(x,n,W,A,R,b,z,true,t0,mt);
+            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_1add(x,n,W,A,R,b,z,ndf,t0,mt);
         elseif j == 2
-            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_2flip(x,n,W,A,R,b,z,true,t0,mt);
+            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_2flip(x,n,W,A,R,b,z,ndf,t0,mt);
         else
-            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_21flip(x,n,W,A,R,b,z,true,t0,mt);
+            [found,x_star,R_delta,z_delta,X_nd,Z_nd] = kp_vnd_21flip(x,n,W,A,R,b,z,ndf,t0,mt);
         end
         if found == true
             % Update current solution

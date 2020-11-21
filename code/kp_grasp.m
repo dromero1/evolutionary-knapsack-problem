@@ -38,7 +38,7 @@ while toc - t0 <= mt
     if ls == true
         if fea == 1
             % Variable neighborhood descent
-            X_star = kp_vnd(x,n,m,W,A,b,J,t0,mt);
+            X_star = kp_vnd(x,n,m,W,A,b,J,true,t0,mt);
             % Save local search solutions
             n_star = size(X_star,1);
             for j = 1:n_star
