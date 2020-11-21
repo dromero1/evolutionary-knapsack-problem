@@ -64,7 +64,7 @@ for alpha = alpha_sweep
 end
 
 %% GA method
-for mup = [0.10 0.25 0.40]
+for mup = [0.05 0.15 0.25]
     % Get solutions
     tic
     [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,0.25,J,mup,mt,dbg);
