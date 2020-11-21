@@ -30,7 +30,7 @@ pop_size = 500;
 num_children = 100;
 
 % Bitwise mutation probability
-gamma = 0.5 * mup;
+gamma = 0.25 * mup;
 
 % Genetic algorithm's time share
 gats = 0.9;
@@ -71,17 +71,18 @@ while toc - t0 <= gats*mt
         [p1,p2] = kp_selection(X,F);
         % Crossover
         ch = kp_crossover(p1,p2);
-        % Mutation
-        r = rand;
-        if r < mup
-            ch = kp_mutation(ch,gamma);
-        end
         % Feasibility percentage
         ch_fea = sum(A*ch' <= b)/m;
         % Local search
         if ch_fea == 1
             ch_star = kp_vnd(ch',n,m,W,A,b,J,false,t0,mt);
             ch = ch_star;
+        end
+        % Mutation
+        r = rand;
+        if r < mup
+            ch = kp_mutation(ch,gamma);
+            ch_fea = sum(A*ch' <= b)/m;
         end
         % Save child
         S(j,:) = ch;
@@ -107,7 +108,7 @@ while toc - t0 <= gats*mt
     gen = gen + 1;
 end
 
-% Local search
+% Improvement phase
 for i = 1:pop_size
     % Check time
     if toc - t0 > mt
