@@ -12,13 +12,13 @@ function ch = kp_crossover(x,y)
 n = length(x);
 
 % Crossover point
-cp = randi(n);
+cp = randi(n-1);
 
 % Child
 ch = false(1,n);
 
 % Crossover
 ch(1:cp) = x(1:cp);
-ch(cp:end) = y(cp:end);
+ch(cp+1:end) = y(cp+1:end);
 
 end

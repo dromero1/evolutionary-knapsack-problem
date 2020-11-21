@@ -34,10 +34,7 @@ dc = dc + 1;
 rc = rc + length(ND);
 
 % Following fronts
-while true
-    if rc == k
-        break;
-    end
+while rc ~= k
     [ND,~] = pareto_dominance(Y);
     F(ND) = dc;
     Y(ND,:) = (-Inf)*ones(length(ND),p);
