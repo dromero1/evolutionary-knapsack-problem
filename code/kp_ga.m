@@ -63,8 +63,8 @@ while toc - t0 <= mt
             break;
         end
         % Children solutions
-        S = false(num_children,n);
-        Zs = zeros(num_children,p+1);
+        CH = false(num_children,n);
+        ZCH = zeros(num_children,p+1);
         % Genetic operators
         for j = 1:num_children
             % Check time
@@ -89,15 +89,15 @@ while toc - t0 <= mt
                 ch_fea = sum(A*ch' <= b)/m;
             end
             % Save child
-            S(j,:) = ch;
+            CH(j,:) = ch;
             % Save objetive values
-            Zs(j,:) = [(W*ch')' ch_fea];
+            ZCH(j,:) = [(W*ch')' ch_fea];
             % Update solution count
             nsol = nsol + 1;
         end
         % Merge solutions
-        GX = [GX; S];
-        GZ = [GZ; Zs];
+        GX = [GX; CH];
+        GZ = [GZ; ZCH];
         % Fitness assignment
         F = kp_fitness(GZ);
         % Update population
