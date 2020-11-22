@@ -32,6 +32,9 @@ pop_size = 500;
 % Number of children
 num_children = 100;
 
+% Exit threshold
+epsilon = 0.05;
+
 % Solutions
 X = false(pop_size,n);
 Z = zeros(pop_size,p+1);
@@ -58,8 +61,8 @@ while toc - t0 <= mt
     F = kp_fitness(GZ);
     % Evolution
     for gen = 1:num_gen
-        % Check time
-        if toc - t0 > mt
+        % Check time | Exit condition
+        if toc - t0 > mt || std(F) < epsilon
             break;
         end
         % Children solutions
