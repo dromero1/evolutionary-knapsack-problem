@@ -58,8 +58,8 @@ for gen = 1:num_gen
         break;
     end
     % Children solutions
-    S = false(num_children,n); % Children solutions
-    Zs = zeros(num_children,p+1); % Children objective values
+    S = false(num_children,n);
+    Zs = zeros(num_children,p+1);
     % Genetic operators
     for j = 1:num_children
         % Check time
