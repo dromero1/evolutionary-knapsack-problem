@@ -12,7 +12,7 @@ Run the console program as follows:
 main
 ```
 
-The program will prompt the results.
+The program prompts the results.
 
 ```
 
