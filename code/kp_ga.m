@@ -44,15 +44,18 @@ nsol = 0;
 
 % Main loop
 while toc - t0 <= mt
+    % Genetic solutions
+    GX = false(pop_size,n);
+    GZ = zeros(pop_size,p+1);
     % Generate initial population
     for i = 1:pop_size
         [x,fea,~] = kp_grasp_construct_solution(n,m,W,A,b,alpha);
-        X(i,:) = x';
-        Z(i,:) = [(W*x)' fea];
+        GX(i,:) = x';
+        GZ(i,:) = [(W*x)' fea];
         nsol = nsol + 1;
     end
     % Initial fitness assignment
-    F = kp_fitness(Z);
+    F = kp_fitness(GZ);
     % Evolution
     for gen = 1:num_gen
         % Check time
@@ -69,7 +72,7 @@ while toc - t0 <= mt
                 break;
             end
             % Selection
-            [p1,p2] = kp_selection(X,F);
+            [p1,p2] = kp_selection(GX,F);
             % Crossover
             ch = kp_crossover(p1,p2);
             % Feasibility percentage
@@ -93,16 +96,17 @@ while toc - t0 <= mt
             nsol = nsol + 1;
         end
         % Merge solutions
-        X = [X; S];
-        Z = [Z; Zs];
+        GX = [GX; S];
+        GZ = [GZ; Zs];
         % Fitness assignment
-        F = kp_fitness(Z);
+        F = kp_fitness(GZ);
         % Update population
         [~,Ipu] = sort(F);
         Ipu = Ipu(1:pop_size);
-        X = X(Ipu,:);
-        Z = Z(Ipu,:);
+        GX = GX(Ipu,:);
+        GZ = GZ(Ipu,:);
         F = F(Ipu,:);
+        % Display
         if dbg == true
             fprintf('GA Instance %d (gen. = %d, mup. = %0.2f, ',ti,gen,mup);
             fprintf('fitness std. = %0.2f)\n',std(F));
@@ -115,20 +119,23 @@ while toc - t0 <= mt
             break;
         end
         % Get solution
-        x = X(i,:);
+        x = GX(i,:);
         % Get feasibility percentage
-        fea = Z(i,p+1);
+        fea = GZ(i,p+1);
         if fea == 1
             % Update feasible count
             fc = fc + 1;
             % Variable neighborhood descent
             x_star = kp_vnd(x',n,m,W,A,b,J,false,t0,mt);
             % Update solution
-            X(i,:) = x_star;
+            GX(i,:) = x_star;
             % Update objetive values
-            Z(i,:) = [(W*x_star')' fea];
+            GZ(i,:) = [(W*x_star')' fea];
         end
     end
+    % Save solutions
+    X = [X; GX];
+    Z = [Z; GZ];
 end
 
 % Remove duplicates
