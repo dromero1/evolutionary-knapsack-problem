@@ -23,17 +23,14 @@ function [X,Z,nsol] = kp_ga(ti,n,p,m,W,A,b,alpha,J,mup,mt,dbg)
 % Initial time
 t0 = toc;
 
+% Number of generations
+num_gen = 100;
+
 % Population size
 pop_size = 500;
 
 % Number of children
 num_children = 100;
-
-% Bitwise mutation probability
-gamma = 0.25 * mup;
-
-% Genetic algorithm's time share
-gats = 0.9;
 
 % Solutions
 X = false(pop_size,n);
@@ -52,19 +49,21 @@ for i = 1:pop_size
     Z(i,:) = [(W*x)' fea];
     nsol = nsol + 1;
 end
-
 % Initial fitness assignment
 F = kp_fitness(Z);
-
-% Main loop
-gen = 1;
-while toc - t0 <= gats*mt
-    % Genetic operators
+% Evolution
+for gen = 1:num_gen
+    % Check time
+    if toc - t0 > mt
+        break;
+    end
+    % Children solutions
     S = false(num_children,n); % Children solutions
     Zs = zeros(num_children,p+1); % Children objective values
+    % Genetic operators
     for j = 1:num_children
         % Check time
-        if toc - t0 > gats*mt
+        if toc - t0 > mt
             break;
         end
         % Selection
@@ -81,7 +80,7 @@ while toc - t0 <= gats*mt
         % Mutation
         r = rand;
         if r < mup
-            ch = kp_mutation(ch,gamma);
+            ch = kp_mutation(ch,mup);
             ch_fea = sum(A*ch' <= b)/m;
         end
         % Save child
@@ -101,13 +100,12 @@ while toc - t0 <= gats*mt
     Ipu = Ipu(1:pop_size);
     X = X(Ipu,:);
     Z = Z(Ipu,:);
+    F = F(Ipu,:);
     if dbg == true
         fprintf('GA Instance %d (gen. = %d, mup. = %0.2f, ',ti,gen,mup);
         fprintf('fitness std. = %0.2f)\n',std(F));
     end
-    gen = gen + 1;
 end
-
 % Improvement phase
 for i = 1:pop_size
     % Check time
@@ -122,24 +120,11 @@ for i = 1:pop_size
         % Update feasible count
         fc = fc + 1;
         % Variable neighborhood descent
-        X_star = kp_vnd(x',n,m,W,A,b,J,true,t0,mt);
-        % Save local search solutions
-        n_star = size(X_star,1);
-        for j = 1:n_star
-            % Local search solution
-            x_star = X_star(j,:);
-            X = [X; x_star];
-            % Determine feasibility
-            fea = sum(A*x_star' <= b)/m;
-            % Local search objective values
-            Z = [Z; (W*x_star')' fea];
-            % Update feasible count
-            if fea == 1
-                fc = fc + 1;
-            end
-            % Update solution count
-            nsol = nsol + 1;
-        end
+        x_star = kp_vnd(x',n,m,W,A,b,J,false,t0,mt);
+        % Update solution
+        X(i,:) = x_star;
+        % Update objetive values
+        Z(i,:) = [(W*x_star')' fea];
     end
 end
 
