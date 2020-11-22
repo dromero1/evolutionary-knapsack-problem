@@ -129,11 +129,24 @@ while toc - t0 <= mt
             % Update feasible count
             fc = fc + 1;
             % Variable neighborhood descent
-            x_star = kp_vnd(x',n,m,W,A,b,J,false,t0,mt);
-            % Update solution
-            GX(i,:) = x_star;
-            % Update objetive values
-            GZ(i,:) = [(W*x_star')' fea];
+            X_star = kp_vnd(x',n,m,W,A,b,J,true,t0,mt);
+            % Save local search solutions
+            n_star = size(X_star,1);
+            for j = 1:n_star
+                % Local search solution
+                x_star = X_star(j,:);
+                GX = [GX; x_star];
+                % Determine feasibility
+                fea = sum(A*x_star' <= b)/m;
+                % Local search objective values
+                GZ = [GZ; (W*x_star')' fea];
+                % Update feasible count
+                if fea == 1
+                    fc = fc + 1;
+                end
+                % Update solution count
+                nsol = nsol + 1;
+            end
         end
     end
     % Save solutions
