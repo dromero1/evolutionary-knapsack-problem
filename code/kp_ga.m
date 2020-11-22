@@ -33,7 +33,7 @@ pop_size = 500;
 num_children = 100;
 
 % Exit threshold
-epsilon = 0.05;
+epsilon = 0.5;
 
 % Solutions
 X = false(pop_size,n);
