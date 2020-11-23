@@ -32,6 +32,9 @@ pop_size = 500;
 % Number of children
 num_children = 100;
 
+% Random offspring generation threshold
+rog = 0.05;
+
 % Exit threshold
 epsilon = 0.5;
 
@@ -77,7 +80,7 @@ while toc - t0 <= mt
             % Selection
             [p1,p2] = kp_selection(GX,F);
             % Crossover
-            ch = kp_crossover(p1,p2);
+            ch = kp_crossover(p1,p2,rog,n,m,W,A,b,alpha);
             % Feasibility percentage
             ch_fea = sum(A*ch' <= b)/m;
             % Local search
@@ -112,7 +115,7 @@ while toc - t0 <= mt
         % Display
         if dbg == true
             fprintf('GA Instance %d (gen. = %d, mup. = %0.2f, ',ti,gen,mup);
-            fprintf('fitness std. = %0.2f)\n',std(F));
+            fprintf('fitness std. = %0.2f, clock = %0.2f)\n',std(F),toc-t0);
         end
     end
     % Improvement phase
