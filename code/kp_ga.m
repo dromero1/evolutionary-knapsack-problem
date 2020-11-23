@@ -27,10 +27,10 @@ t0 = toc;
 num_gen = 100;
 
 % Population size
-pop_size = 500;
+pop_size = 300;
 
 % Number of children
-num_children = 100;
+num_children = 60;
 
 % Random offspring generation threshold
 rog = 0.05;
