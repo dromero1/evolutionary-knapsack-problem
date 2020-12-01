@@ -8,7 +8,7 @@ function [ND,D] = pareto_dominance(Y)
 %   ND - Non-dominated set
 %   D - Dominated set
 
-% Number of solutions and objectives
+% Number of solutions
 n = size(Y,1);
 
 % Solutions
