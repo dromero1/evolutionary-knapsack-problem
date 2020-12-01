@@ -1,4 +1,4 @@
-# EvolutionaryKnapsackProblem
+# evolutionary-knapsack-problem
 
 ## Getting Started
 
