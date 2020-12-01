@@ -1,8 +1,5 @@
-function [rT,rN,rS,rF,rFS,rI1,rI2,rDU] = kp_testbed(s)
+function [rT,rN,rS,rF,rFS,rI1,rI2,rDU] = kp_testbed()
 %KP_TESTBED Knapsack problem testbed
-%
-%   Inputs:
-%   s - Scenario
 %
 %   Outputs:
 %   rT - Processing times
@@ -61,9 +58,7 @@ for ti = 1:IC
     % Objective coefficients
     W = P_raw(m+2:m+p+1,1:n);
     %% Execution
-    if s == 1
-        MR = kp_scenario1(ti,n,p,m,W,A,b,mt,dbg);
-    end
+    MR = kp_scenario(ti,n,p,m,W,A,b,mt,dbg);
     %% Pareto front
     % Mix solutions
     X = [];

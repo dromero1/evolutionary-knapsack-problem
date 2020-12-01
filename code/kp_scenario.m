@@ -1,5 +1,5 @@
-function MR = kp_scenario1(ti,n,p,m,W,A,b,mt,dbg)
-%KP_SCENARIO1 Comparing all methods
+function MR = kp_scenario(ti,n,p,m,W,A,b,mt,dbg)
+%KP_SCENARIO Comparing all methods
 %
 %   Inputs:
 %   ti - Test instance
