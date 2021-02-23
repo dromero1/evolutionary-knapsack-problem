@@ -1,5 +1,5 @@
 function ch = kp_crossover(p1,p2,rog,n,m,W,A,b,alpha)
-%KP_Crossover Crossover operator
+%KP_CROSSOVER Crossover operator
 %
 %   Inputs:
 %   p1 - First parent
